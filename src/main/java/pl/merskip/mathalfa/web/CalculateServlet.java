@@ -45,6 +45,7 @@ public class CalculateServlet extends HttpServlet {
     
     private String calculate(String plainText) {
         Symbol rootSymbol = parser.parseAndGetRootSymbol(plainText);
-        return new CalculateOperation().executeForResult(rootSymbol).toPlainText();
+        Symbol result = new CalculateOperation().executeForResult(rootSymbol);
+        return result != null ? result.toPlainText() : null;
     }
 }
