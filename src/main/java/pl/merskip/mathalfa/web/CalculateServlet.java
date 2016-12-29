@@ -1,6 +1,8 @@
 package pl.merskip.mathalfa.web;
 
+import com.google.common.base.Throwables;
 import pl.merskip.mathalfa.base.core.Symbol;
+import pl.merskip.mathalfa.base.core.fragment.FragmentException;
 import pl.merskip.mathalfa.base.infixparser.PostfixParser;
 import pl.merskip.mathalfa.base.operation.CalculateOperation;
 import pl.merskip.mathalfa.base.shared.SharedPostfixParser;
@@ -30,7 +32,12 @@ public class CalculateServlet extends HttpServlet {
         String input = request.getParameter("i");
         if (input != null && !input.isEmpty()) {
             request.setAttribute("input", input);
-            request.setAttribute("result", calculate(input));
+            
+            try {
+                request.setAttribute("result", calculate(input));
+            } catch (FragmentException e) {
+                request.setAttribute("error", Throwables.getStackTraceAsString(e));
+            }
         }
         
         request.getRequestDispatcher("index.jsp").forward(request, response);
