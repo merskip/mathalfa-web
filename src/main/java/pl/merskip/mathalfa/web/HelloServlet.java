@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-@WebServlet("")
+@WebServlet(name = "HelloServlet", urlPatterns = "")
 public class HelloServlet extends HttpServlet {
     
     private PostfixParser parser;
@@ -25,18 +24,14 @@ public class HelloServlet extends HttpServlet {
     }
     
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String plainText = "1+2";
         
-        PrintWriter writer = resp.getWriter();
-        writer.println("<!DOCTYPE html>");
-        writer.println("<html>");
-        writer.println("<body>");
-        writer.println("<p>Hello World!</p>");
-        writer.println("<p>" + plainText + " = " + calculate(plainText) + "</p>");
-        writer.println("</body>");
-        writer.println("</html>");
+        request.setAttribute("plainText", plainText);
+        request.setAttribute("result", calculate(plainText));
+        
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
     
     private String calculate(String plainText) {
