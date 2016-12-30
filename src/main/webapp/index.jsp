@@ -43,14 +43,18 @@
                       value="${requestScope.nano_time * 1e-6}"/>
 
     <c:if test="${not empty requestScope.result}">
-        <div class="panel panel-primary ma-panel-result">
-            <div class="panel-heading">
-                Result
-            </div>
-            <div class="panel-body">
-                <img src="data:image/png;base64,${requestScope.result_base64}"
-                     title="${requestScope.result}">
-            </div>
+        <div class="panel panel-default ma-panel-result">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="list-group-item-heading">
+                        <p class="text-primary">Result:</p>
+                    </div>
+                    <div class="list-group-item-text">
+                        <img src="data:image/png;base64,${requestScope.result_base64}"
+                             title="${requestScope.result}">
+                    </div>
+                </li>
+            </ul>
             <div class="panel-footer">
                 <span class="ma-result-time pull-right">
                     Result in ${millis_time} ms
