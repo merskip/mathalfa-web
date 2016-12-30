@@ -6,6 +6,7 @@ import pl.merskip.mathalfa.base.core.fragment.FragmentException;
 import pl.merskip.mathalfa.base.infixparser.PostfixParser;
 import pl.merskip.mathalfa.base.operation.CalculateOperation;
 import pl.merskip.mathalfa.base.shared.SharedPostfixParser;
+import pl.merskip.mathalfa.latex.Configuration;
 import pl.merskip.mathalfa.latex.LatexGenerator;
 
 import javax.servlet.ServletException;
@@ -25,7 +26,10 @@ public class CalculateServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         parser = new SharedPostfixParser();
-        latexGenerator = new LatexGenerator();
+        
+        Configuration conf = new Configuration();
+        conf.fontSize = 24.0f;
+        latexGenerator = new LatexGenerator(conf);
     }
     
     @Override

@@ -39,7 +39,7 @@
         </div>
     </form>
 
-    <fmt:formatNumber var="millis_time" minFractionDigits="6" maxFractionDigits="6"
+    <fmt:formatNumber var="millis_time" minFractionDigits="3" maxFractionDigits="3"
                       value="${requestScope.nano_time * 1e-6}"/>
 
     <c:if test="${not empty requestScope.result}">
