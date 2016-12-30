@@ -11,33 +11,44 @@
     <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="static/mathalfa-web-styles.css" />
+    <link rel="stylesheet" href="static/ma-styles.css" />
 
     <title>mathalfa-web</title>
 </head>
 <body>
 <div class="container">
-    <h1>
+    <div class="ma-header">
         <span class="ma-logo"></span>
-    </h1>
-    <div>
-        <form method="get" action="">
-            Input: <input name="i" placeholder="1+(2+3)" value="${requestScope.input}">
-            <button>Compute</button>
-        </form>
     </div>
-    <div>
-        <c:if test="${not empty requestScope.result}">
-            <p>Result: </p>
-            <span>${requestScope.input}</span> =
-            <output>${requestScope.result}</output>
-        </c:if>
-    </div>
-    <div>
-        <c:if test="${not empty requestScope.error}">
-            <pre style="color: #cc0000">${requestScope.error}</pre>
-        </c:if>
-    </div>
+    <form method="get" action="" class="ma-form-input">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Input</span>
+            <input type="text" name="i" class="form-control"
+                   placeholder="1+(2+3)" value="${requestScope.input}">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">Compute</button>
+            </span>
+        </div>
+    </form>
+
+    <c:if test="${not empty requestScope.result}">
+        <div class="panel panel-primary ma-panel-result">
+            <div class="panel-heading">
+                Result
+            </div>
+            <div class="panel-body">
+                ${requestScope.result}
+            </div>
+        </div>
+    </c:if>
+
+    <c:if test="${not empty requestScope.error}">
+        <div class="panel panel-danger ma-panel-error">
+            <div class="panel-body">
+                <pre style="color: #cc0000">${requestScope.error}</pre>
+            </div>
+        </div>
+    </c:if>
 </div>
 </body>
 </html>
