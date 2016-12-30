@@ -48,7 +48,8 @@
                 Result
             </div>
             <div class="panel-body">
-                ${requestScope.result}
+                <img src="data:image/png;base64,${requestScope.result_base64}"
+                     title="${requestScope.result}">
             </div>
             <div class="panel-footer">
                 <span class="ma-result-time pull-right">

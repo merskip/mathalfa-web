@@ -6,6 +6,7 @@ import pl.merskip.mathalfa.base.core.fragment.FragmentException;
 import pl.merskip.mathalfa.base.infixparser.PostfixParser;
 import pl.merskip.mathalfa.base.operation.CalculateOperation;
 import pl.merskip.mathalfa.base.shared.SharedPostfixParser;
+import pl.merskip.mathalfa.latex.LatexGenerator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,11 +19,13 @@ import java.io.IOException;
 public class CalculateServlet extends HttpServlet {
     
     private PostfixParser parser;
+    private LatexGenerator latexGenerator;
     
     @Override
     public void init() throws ServletException {
         super.init();
         parser = new SharedPostfixParser();
+        latexGenerator = new LatexGenerator();
     }
     
     @Override
@@ -35,7 +38,13 @@ public class CalculateServlet extends HttpServlet {
     
             long timeStart = System.nanoTime();
             try {
-                request.setAttribute("result", calculate(input));
+                Symbol rootSymbol = parser.parseAndGetRootSymbol(input);
+                Symbol result = new CalculateOperation().executeForResult(rootSymbol);
+                
+                if (result != null) {
+                    request.setAttribute("result", result.toPlainText());
+                    request.setAttribute("result_base64", latexGenerator.base64RenderSymbol(result));
+                }
             }
             catch (FragmentException e) {
                 request.setAttribute("error", Throwables.getStackTraceAsString(e));
@@ -46,11 +55,5 @@ public class CalculateServlet extends HttpServlet {
         }
         
         request.getRequestDispatcher("index.jsp").forward(request, response);
-    }
-    
-    private String calculate(String plainText) {
-        Symbol rootSymbol = parser.parseAndGetRootSymbol(plainText);
-        Symbol result = new CalculateOperation().executeForResult(rootSymbol);
-        return result != null ? result.toPlainText() : null;
     }
 }

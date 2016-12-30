@@ -1,3 +1,6 @@
 [submodule "mathalfa-base"]
 	path = mathalfa-base
 	url = git@gitlab.com:mathalfa/mathalfa-base.git
+[submodule "mathalfa-latex"]
+	path = mathalfa-latex
+	url = git@gitlab.com:mathalfa/mathalfa-latex.git
