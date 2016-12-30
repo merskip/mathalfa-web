@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap-theme.css" />
     <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(function(){
+            $('[data-toggle="tooltip"]').tooltip({html: true});
+        });
+    </script>
 
     <link rel="stylesheet" href="static/ma-styles.css" />
 
@@ -39,8 +44,12 @@
         </div>
     </form>
 
-    <fmt:formatNumber var="millis_time" minFractionDigits="3" maxFractionDigits="3"
-                      value="${requestScope.nano_time * 1e-6}"/>
+    <fmt:formatNumber var="total_time" minFractionDigits="3" maxFractionDigits="3"
+                      value="${requestScope.total_nano_time * 1e-6}"/>
+    <fmt:formatNumber var="calculation_time" minFractionDigits="3" maxFractionDigits="3"
+                      value="${requestScope.calculation_nano_time * 1e-6}"/>
+    <fmt:formatNumber var="latex_time" minFractionDigits="3" maxFractionDigits="3"
+                      value="${requestScope.latex_nano_time * 1e-6}"/>
 
     <c:if test="${not empty requestScope.result}">
         <div class="panel panel-default ma-panel-result">
@@ -57,7 +66,11 @@
             </ul>
             <div class="panel-footer">
                 <span class="ma-result-time pull-right">
-                    Result in ${millis_time} ms
+                    in ${total_time} ms
+                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip"
+                          title="<strong>Total time - ${total_time} ms</strong><br/>
+                                 Calculation time - ${calculation_time} ms<br/>
+                                 Render images - ${latex_time} ms"></span>
                 </span>
                 <div class="clearfix"></div>
             </div>
@@ -71,7 +84,7 @@
             </div>
             <div class="panel-footer">
                 <span class="ma-result-time pull-right">
-                    Result in ${millis_time} ms
+                    in ${total_time} ms
                 </span>
                 <div class="clearfix"></div>
             </div>

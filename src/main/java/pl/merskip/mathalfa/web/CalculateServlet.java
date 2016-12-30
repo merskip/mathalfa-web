@@ -44,17 +44,20 @@ public class CalculateServlet extends HttpServlet {
             try {
                 Symbol rootSymbol = parser.parseAndGetRootSymbol(input);
                 Symbol result = new CalculateOperation().executeForResult(rootSymbol);
+                long calculationEnd = System.nanoTime();
+                request.setAttribute("calculation_nano_time", calculationEnd - timeStart);
                 
                 if (result != null) {
                     request.setAttribute("result", result.toPlainText());
                     request.setAttribute("result_base64", latexGenerator.base64RenderSymbol(result));
+                    request.setAttribute("latex_nano_time", System.nanoTime() - calculationEnd);
                 }
             }
             catch (FragmentException e) {
                 request.setAttribute("error", Throwables.getStackTraceAsString(e));
             }
             finally {
-                request.setAttribute("nano_time", System.nanoTime() - timeStart);
+                request.setAttribute("total_nano_time", System.nanoTime() - timeStart);
             }
         }
         
