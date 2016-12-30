@@ -23,7 +23,7 @@
         </c:otherwise>
     </c:choose>
 </head>
-<body>
+<body <c:if test="${empty requestScope.result}">class="ma-start-page"</c:if>>
 <div class="container">
     <div class="ma-header">
         <span class="ma-logo"></span>
