@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,6 +39,9 @@
         </div>
     </form>
 
+    <fmt:formatNumber var="millis_time" minFractionDigits="6" maxFractionDigits="6"
+                      value="${requestScope.nano_time * 1e-6}"/>
+
     <c:if test="${not empty requestScope.result}">
         <div class="panel panel-primary ma-panel-result">
             <div class="panel-heading">
@@ -46,6 +50,12 @@
             <div class="panel-body">
                 ${requestScope.result}
             </div>
+            <div class="panel-footer">
+                <span class="ma-result-time pull-right">
+                    Result in ${millis_time} ms
+                </span>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </c:if>
 
@@ -53,6 +63,12 @@
         <div class="panel panel-danger ma-panel-error">
             <div class="panel-body">
                 <pre style="color: #cc0000">${requestScope.error}</pre>
+            </div>
+            <div class="panel-footer">
+                <span class="ma-result-time pull-right">
+                    Result in ${millis_time} ms
+                </span>
+                <div class="clearfix"></div>
             </div>
         </div>
     </c:if>

@@ -32,11 +32,16 @@ public class CalculateServlet extends HttpServlet {
         String input = request.getParameter("i");
         if (input != null && !input.isEmpty()) {
             request.setAttribute("input", input);
-            
+    
+            long timeStart = System.nanoTime();
             try {
                 request.setAttribute("result", calculate(input));
-            } catch (FragmentException e) {
+            }
+            catch (FragmentException e) {
                 request.setAttribute("error", Throwables.getStackTraceAsString(e));
+            }
+            finally {
+                request.setAttribute("nano_time", System.nanoTime() - timeStart);
             }
         }
         

@@ -20,6 +20,10 @@ body {
     margin-bottom: 24px;
 }
 
+.ma-result-time {
+    font-size: 12px;
+}
+
 .ma-panel-error {
     background-color: #f5f5f5;
 }
