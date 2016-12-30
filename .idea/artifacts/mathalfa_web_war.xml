@@ -2,7 +2,10 @@
   <artifact type="war" name="mathalfa-web:war">
     <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="mathalfa-web-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="mathalfa-web:war exploded" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="artifact" artifact-name="mathalfa-web:web exploded" />
     </root>
   </artifact>
 </component>
