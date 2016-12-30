@@ -21,4 +21,9 @@
     vertical-align: sub;
     font-style: italic;
     color: #4682B4;
+    transition: color 0.3s;
+}
+
+.ma-logo:hover::after {
+    color: #1E90FF;
 }
