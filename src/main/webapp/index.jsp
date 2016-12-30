@@ -13,7 +13,14 @@
 
     <link rel="stylesheet" href="static/ma-styles.css" />
 
-    <title>mathalfa-web</title>
+    <c:choose>
+        <c:when test="${not empty requestScope.input}">
+            <title>${requestScope.input} - mathalfa-web</title>
+        </c:when>
+        <c:otherwise>
+            <title>mathalfa-web</title>
+        </c:otherwise>
+    </c:choose>
 </head>
 <body>
 <div class="container">
