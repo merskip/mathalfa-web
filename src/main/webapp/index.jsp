@@ -17,7 +17,9 @@
 </head>
 <body>
 <div class="container">
-    <h1>mathalfa-web</h1>
+    <h1>
+        <span class="ma-logo"></span>
+    </h1>
     <div>
         <form method="get" action="">
             Input: <input name="i" placeholder="1+(2+3)" value="${requestScope.input}">
