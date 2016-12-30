@@ -1,24 +1,24 @@
 .ma-logo {
     display: inline-block;
     letter-spacing: 1px;
-    color: #777;
+    color: #708090;
 }
 
 .ma-logo::before {
     content: "Math";
     font-family: sans-serif;
-
 }
 
 .ma-logo:first-letter {
     font-weight: bold;
     text-transform: uppercase;
-    color: #000;
+    color: #DC143C;
 }
 
 .ma-logo::after {
     content: "\03B1";
     font-family: serif;
     vertical-align: sub;
-    font-style: italic
+    font-style: italic;
+    color: #4682B4;
 }
