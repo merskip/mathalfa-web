@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import pl.merskip.mathalfa.base.core.Symbol;
 import pl.merskip.mathalfa.base.core.fragment.FragmentException;
+import pl.merskip.mathalfa.base.elementary.RationalNumber;
 import pl.merskip.mathalfa.base.infixparser.PostfixParser;
 import pl.merskip.mathalfa.base.operation.CalculateOperation;
 import pl.merskip.mathalfa.base.shared.SharedPostfixParser;
@@ -27,7 +28,7 @@ public class CalculateServlet extends HttpServlet {
     private HttpServletRequest request;
     private HttpServletResponse response;
     
-    private Symbol inputRootSymbol, resultRootSymbol;
+    private Symbol inputRootSymbol, resultRootSymbol, simplifyRootSymbol;
     private String inputLatex, resultLatex;
     private long totalTime, calculationTime, latexTime;
     
@@ -73,11 +74,23 @@ public class CalculateServlet extends HttpServlet {
                 calculationTime = measure(() -> {
                     inputRootSymbol = parser.parseAndGetRootSymbol(input);
                     resultRootSymbol = new CalculateOperation().executeForResult(inputRootSymbol);
+                    
+                    if (resultRootSymbol instanceof RationalNumber) {
+                        simplifyRootSymbol = ((RationalNumber)resultRootSymbol).simplify();
+                    }
+                    else {
+                        simplifyRootSymbol = resultRootSymbol;
+                    }
                 });
             
                 latexTime = measure(() -> {
                     inputLatex = latexRenderer.renderSymbol(inputRootSymbol);
-                    resultLatex = latexRenderer.renderSymbol(resultRootSymbol);
+                    if (resultRootSymbol != simplifyRootSymbol) {
+                        resultLatex = latexRenderer.renderEquation(resultRootSymbol, simplifyRootSymbol);
+                    }
+                    else {
+                        resultLatex = latexRenderer.renderSymbol(resultRootSymbol);
+                    }
                 });
             }
             catch (FragmentException e) {
