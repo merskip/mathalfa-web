@@ -21,7 +21,9 @@
           <element id="archive" name="mathalfa-latex-1.0-SNAPSHOT.jar">
             <element id="module-output" name="mathalfa-latex" />
           </element>
-          <element id="library" level="project" name="Maven: org.scilab.forge:jlatexmath:1.0.4" />
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.0-M3" />
+          <element id="library" level="project" name="Maven: org.opentest4j:opentest4j:1.0.0-M1" />
+          <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-commons:1.0.0-M3" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: org.webjars:webjars-servlet-2.x:1.5" />
           <element id="library" level="project" name="Maven: org.webjars:bootstrap:3.3.7" />

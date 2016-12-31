@@ -6,8 +6,8 @@ import pl.merskip.mathalfa.base.core.fragment.FragmentException;
 import pl.merskip.mathalfa.base.infixparser.PostfixParser;
 import pl.merskip.mathalfa.base.operation.CalculateOperation;
 import pl.merskip.mathalfa.base.shared.SharedPostfixParser;
-import pl.merskip.mathalfa.latex.Configuration;
-import pl.merskip.mathalfa.latex.LatexGenerator;
+import pl.merskip.mathalfa.latex.core.RendererRegister;
+import pl.merskip.mathalfa.latex.elementary.ElementaryRenderer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,16 +20,13 @@ import java.io.IOException;
 public class CalculateServlet extends HttpServlet {
     
     private PostfixParser parser;
-    private LatexGenerator latexGenerator;
+    private RendererRegister latexRenderer;
     
     @Override
     public void init() throws ServletException {
         super.init();
         parser = new SharedPostfixParser();
-        
-        Configuration conf = new Configuration();
-        conf.fontSize = 24.0f;
-        latexGenerator = new LatexGenerator(conf);
+        latexRenderer = new ElementaryRenderer();
     }
     
     @Override
@@ -49,7 +46,8 @@ public class CalculateServlet extends HttpServlet {
                 
                 if (result != null) {
                     request.setAttribute("result", result.toPlainText());
-                    request.setAttribute("result_base64", latexGenerator.base64RenderSymbol(result));
+                    request.setAttribute("result_latex", latexRenderer.renderSymbol(result));
+                    request.setAttribute("input_latex", latexRenderer.renderSymbol(rootSymbol));
                     request.setAttribute("latex_nano_time", System.nanoTime() - calculationEnd);
                 }
             }

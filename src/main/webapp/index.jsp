@@ -56,11 +56,18 @@
             <ul class="list-group">
                 <li class="list-group-item">
                     <div class="list-group-item-heading">
+                        <p class="text-primary">Input:</p>
+                    </div>
+                    <div class="list-group-item-text">
+                            ${requestScope.input_latex}
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="list-group-item-heading">
                         <p class="text-primary">Result:</p>
                     </div>
                     <div class="list-group-item-text">
-                        <img src="data:image/png;base64,${requestScope.result_base64}"
-                             title="${requestScope.result}">
+                        ${requestScope.result_latex}
                     </div>
                 </li>
             </ul>
@@ -70,7 +77,7 @@
                     <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip"
                           title="<strong>Total time - ${total_time} ms</strong><br/>
                                  Calculation time - ${calculation_time} ms<br/>
-                                 Render images - ${latex_time} ms"></span>
+                                 Time generate LaTex  - ${latex_time} ms"></span>
                 </span>
                 <div class="clearfix"></div>
             </div>
