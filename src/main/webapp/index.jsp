@@ -63,7 +63,9 @@
 <body <c:if test="${empty requestScope.result and empty requestScope.error}">class="ma-start-page"</c:if>>
 <div class="container">
     <div class="ma-header">
-        <span class="ma-logo"></span>
+        <a href="${pageContext.request.contextPath}/">
+            <span class="ma-logo"></span>
+        </a>
     </div>
     <form method="get" action="" class="ma-form-input">
         <div class="input-group">
