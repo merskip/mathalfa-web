@@ -16,6 +16,24 @@
             $('[data-toggle="tooltip"]').tooltip({html: true});
         });
     </script>
+    <script type="text/x-mathjax-config">
+        //noinspection JSUnresolvedVariable,JSUnresolvedFunction
+        MathJax.Hub.Config({
+            jax: ["input/TeX","output/HTML-CSS"],
+            messageStyle: "none",
+            showMathMenu: false,
+            "fast-preview": {
+                disabled: true
+            },
+            preRemoveClass: "ma\-math\-preview",
+            tex2jax: {
+                preview: "none"
+            }
+        });
+    </script>
+    <script type="text/javascript" async
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+    </script>
 
     <link rel="stylesheet" href="static/ma-styles.css" />
 
@@ -59,7 +77,8 @@
                         <p class="text-primary">Input:</p>
                     </div>
                     <div class="list-group-item-text">
-                            ${requestScope.input_latex}
+                        <span class="ma-math-preview"></span>
+                        <script type="math/tex">${requestScope.input_latex}</script>
                     </div>
                 </li>
                 <li class="list-group-item">
@@ -67,7 +86,8 @@
                         <p class="text-primary">Result:</p>
                     </div>
                     <div class="list-group-item-text">
-                        ${requestScope.result_latex}
+                        <span class="ma-math-preview"></span>
+                        <script type="math/tex">${requestScope.result_latex}</script>
                     </div>
                 </li>
             </ul>

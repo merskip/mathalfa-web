@@ -29,6 +29,17 @@ body {
     margin-bottom: 24px;
 }
 
+.ma-panel-result {
+}
+
+.ma-math-preview {
+    display: inline-block;
+}
+
+.ma-math-preview::before {
+    content: "Loading...";
+}
+
 .ma-result-time {
     font-size: 12px;
 }
