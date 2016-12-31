@@ -12,7 +12,6 @@
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
-          <root url="file://$MODULE_DIR$/src/main/webapp/jsp" />
           <root url="file://$MODULE_DIR$/src/main/webapp/static" />
         </sourceRoots>
       </configuration>
@@ -48,5 +47,6 @@
     <orderEntry type="library" name="Maven: org.webjars:webjars-servlet-2.x:1.5" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:bootstrap:3.3.7" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:jquery:1.11.1" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:MathJax:2.6.1" level="project" />
   </component>
 </module>

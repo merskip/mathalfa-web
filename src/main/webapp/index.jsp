@@ -7,6 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Bootstrap & jQuery -->
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap-theme.css" />
     <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
@@ -16,8 +17,11 @@
             $('[data-toggle="tooltip"]').tooltip({html: true});
         });
     </script>
+
+    <!-- MathJax -->
+    <script async src="webjars/MathJax/2.6.1/MathJax.js?config=TeX-AMS_CHTML"> </script>
+    <link rel="stylesheet" href="static/mjx-chtml.css" />
     <script type="text/x-mathjax-config">
-        //noinspection JSUnresolvedVariable,JSUnresolvedFunction
         MathJax.Hub.Config({
             jax: ["input/TeX","output/HTML-CSS"],
             messageStyle: "none",
@@ -31,16 +35,21 @@
             }
         });
     </script>
-    <script type="text/javascript" async
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
-    </script>
     <style><%--suppress CssUnusedSymbol --%>
         .mjx-chtml {
             outline: none;
         }
     </style>
 
+    <!-- mathafla-web -->
     <link rel="stylesheet" href="static/ma-styles.css" />
+    <script>
+        $(function () {
+            // Wersja MathJax 2.6.1 nie usuwa elementów,
+            // tylko czyści treść
+            $('.ma-math-preview').html(" ");
+        });
+    </script>
 
     <c:choose>
         <c:when test="${not empty requestScope.input}">

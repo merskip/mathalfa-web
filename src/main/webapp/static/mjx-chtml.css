@@ -1,0 +1,14 @@
+.mjx-chtml {
+    outline: none;
+    animation: mjx-chtml-show 0.6s;
+    position: relative;
+}
+
+@keyframes mjx-chtml-show {
+    from {
+        opacity: 0.0;
+    }
+    to {
+        opacity: 1.0;
+    }
+}
