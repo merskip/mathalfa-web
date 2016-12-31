@@ -77,33 +77,26 @@
     </form>
 
     <fmt:formatNumber var="total_time" minFractionDigits="3" maxFractionDigits="3"
-                      value="${requestScope.total_nano_time * 1e-6}"/>
+                      value="${requestScope.times['total'] * 1e-6}"/>
     <fmt:formatNumber var="calculation_time" minFractionDigits="3" maxFractionDigits="3"
-                      value="${requestScope.calculation_nano_time * 1e-6}"/>
+                      value="${requestScope.times['calculation'] * 1e-6}"/>
     <fmt:formatNumber var="latex_time" minFractionDigits="3" maxFractionDigits="3"
-                      value="${requestScope.latex_nano_time * 1e-6}"/>
+                      value="${requestScope.times['latex'] * 1e-6}"/>
 
     <c:if test="${not empty requestScope.result}">
         <div class="panel panel-default ma-panel-result">
             <ul class="list-group">
-                <li class="list-group-item">
-                    <div class="list-group-item-heading">
-                        <p class="text-primary">Input:</p>
-                    </div>
-                    <div class="list-group-item-text">
-                        <span class="ma-math-preview"></span>
-                        <script type="math/tex">${requestScope.input_latex}</script>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="list-group-item-heading">
-                        <p class="text-primary">Result:</p>
-                    </div>
-                    <div class="list-group-item-text">
-                        <span class="ma-math-preview"></span>
-                        <script type="math/tex">${requestScope.result_latex}</script>
-                    </div>
-                </li>
+                <c:forEach var="section" items="${requestScope.sections}">
+                    <li class="list-group-item">
+                        <div class="list-group-item-heading">
+                            <p class="text-primary">${section.title}</p>
+                        </div>
+                        <div class="list-group-item-text">
+                            <span class="ma-math-preview"></span>
+                            <script type="math/tex">${section.latex}</script>
+                        </div>
+                    </li>
+                </c:forEach>
             </ul>
             <div class="panel-footer">
                 <span class="ma-result-time pull-right">

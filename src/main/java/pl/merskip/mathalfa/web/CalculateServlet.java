@@ -1,6 +1,8 @@
 package pl.merskip.mathalfa.web;
 
 import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import pl.merskip.mathalfa.base.core.Symbol;
 import pl.merskip.mathalfa.base.core.fragment.FragmentException;
 import pl.merskip.mathalfa.base.infixparser.PostfixParser;
@@ -22,6 +24,13 @@ public class CalculateServlet extends HttpServlet {
     private PostfixParser parser;
     private RendererRegister latexRenderer;
     
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    
+    private Symbol inputRootSymbol, resultRootSymbol;
+    private String inputLatex, resultLatex;
+    private long totalTime, calculationTime, latexTime;
+    
     @Override
     public void init() throws ServletException {
         super.init();
@@ -32,33 +41,64 @@ public class CalculateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.request = request;
+        this.response = response;
         
         String input = request.getParameter("i");
         if (input != null && !input.isEmpty()) {
             request.setAttribute("input", input);
     
-            long timeStart = System.nanoTime();
+            calculate(input);
+            if (resultRootSymbol != null) {
+                request.setAttribute("result", true);
+                request.setAttribute("sections", ImmutableList.of(
+                        new LatexSection("Input:", inputLatex),
+                        new LatexSection("Result:", resultLatex)
+                ));
+                request.setAttribute("times", ImmutableMap.of(
+                        "total", totalTime,
+                        "calculation", calculationTime,
+                        "latex", latexTime
+                ));
+            }
+        }
+        
+        clearResults();
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+    
+    private void calculate(String input) {
+        totalTime = measure(() -> {
             try {
-                Symbol rootSymbol = parser.parseAndGetRootSymbol(input);
-                Symbol result = new CalculateOperation().executeForResult(rootSymbol);
-                long calculationEnd = System.nanoTime();
-                request.setAttribute("calculation_nano_time", calculationEnd - timeStart);
-                
-                if (result != null) {
-                    request.setAttribute("result", result.toPlainText());
-                    request.setAttribute("result_latex", latexRenderer.renderSymbol(result));
-                    request.setAttribute("input_latex", latexRenderer.renderSymbol(rootSymbol));
-                    request.setAttribute("latex_nano_time", System.nanoTime() - calculationEnd);
-                }
+                calculationTime = measure(() -> {
+                    inputRootSymbol = parser.parseAndGetRootSymbol(input);
+                    resultRootSymbol = new CalculateOperation().executeForResult(inputRootSymbol);
+                });
+            
+                latexTime = measure(() -> {
+                    inputLatex = latexRenderer.renderSymbol(inputRootSymbol);
+                    resultLatex = latexRenderer.renderSymbol(resultRootSymbol);
+                });
             }
             catch (FragmentException e) {
                 request.setAttribute("error", Throwables.getStackTraceAsString(e));
             }
-            finally {
-                request.setAttribute("total_nano_time", System.nanoTime() - timeStart);
-            }
-        }
-        
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        });
+    }
+    
+    private void clearResults() {
+        inputRootSymbol = null;
+        resultRootSymbol = null;
+        inputLatex = null;
+        resultLatex = null;
+        totalTime = 0;
+        calculationTime = 0;
+        latexTime = 0;
+    }
+    
+    private static long measure(Runnable runnable) {
+        long startTime = System.nanoTime();
+        runnable.run();
+        return System.nanoTime() - startTime;
     }
 }
