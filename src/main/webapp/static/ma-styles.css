@@ -34,10 +34,42 @@ body {
 
 .ma-math-preview {
     display: inline-block;
+    position: relative;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 100%;
+    background-color: #4682B4;
+
+    animation: ma-math-preview-anim-position 1s ease-in-out infinite alternate,
+               ma-math-preview-anim-opacity 1s ease-in-out infinite,
+               ma-math-preview-anim-scale 1s ease infinite;
 }
 
-.ma-math-preview::before {
-    content: "Loading...";
+@keyframes ma-math-preview-anim-position {
+    from {
+        left: 0
+    }
+    to {
+        left: 50px
+    }
+}
+@keyframes ma-math-preview-anim-opacity {
+    from, to {
+        opacity: 0.0;
+    }
+    50% {
+        opacity: 1.0;
+    }
+}
+@keyframes ma-math-preview-anim-scale {
+    from  {
+        transform: scale(0, 0);
+    }
+    to {
+        transform: scale(1, 1);
+    }
 }
 
 .ma-result-time {
