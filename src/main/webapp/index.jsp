@@ -61,12 +61,12 @@
     </c:choose>
 </head>
 <body <c:if test="${empty requestScope.result and empty requestScope.error}">class="ma-start-page"</c:if>>
-<div class="container">
-    <div class="ma-header">
-        <a href="${pageContext.request.contextPath}/">
-            <span class="ma-logo"></span>
-        </a>
-    </div>
+<header class="ma-header container">
+    <a href="${pageContext.request.contextPath}/">
+        <span class="ma-logo"></span>
+    </a>
+</header>
+<div class="ma-main-content container">
     <form method="get" action="" class="ma-form-input">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Input</span>
