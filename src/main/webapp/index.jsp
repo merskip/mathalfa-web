@@ -34,6 +34,11 @@
     <script type="text/javascript" async
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
     </script>
+    <style><%--suppress CssUnusedSymbol --%>
+        .mjx-chtml {
+            outline: none;
+        }
+    </style>
 
     <link rel="stylesheet" href="static/ma-styles.css" />
 
