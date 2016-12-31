@@ -5,9 +5,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import pl.merskip.mathalfa.base.core.Symbol;
 import pl.merskip.mathalfa.base.core.fragment.FragmentException;
-import pl.merskip.mathalfa.base.elementary.RationalNumber;
 import pl.merskip.mathalfa.base.infixparser.PostfixParser;
 import pl.merskip.mathalfa.base.operation.CalculateOperation;
+import pl.merskip.mathalfa.base.operation.SimplifyOperation;
 import pl.merskip.mathalfa.base.shared.SharedPostfixParser;
 import pl.merskip.mathalfa.latex.core.RendererRegister;
 import pl.merskip.mathalfa.latex.elementary.ElementaryRenderer;
@@ -74,13 +74,7 @@ public class CalculateServlet extends HttpServlet {
                 calculationTime = measure(() -> {
                     inputRootSymbol = parser.parseAndGetRootSymbol(input);
                     resultRootSymbol = new CalculateOperation().executeForResult(inputRootSymbol);
-                    
-                    if (resultRootSymbol instanceof RationalNumber) {
-                        simplifyRootSymbol = ((RationalNumber)resultRootSymbol).simplify();
-                    }
-                    else {
-                        simplifyRootSymbol = resultRootSymbol;
-                    }
+                    simplifyRootSymbol = new SimplifyOperation().executeForResult(resultRootSymbol);
                 });
             
                 latexTime = measure(() -> {
