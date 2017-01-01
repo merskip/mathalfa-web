@@ -95,6 +95,10 @@
                                         == 'pl.merskip.mathalfa.web.SymbolSection'}">
                             <jsp:include page="symbol-section.jsp" />
                         </c:when>
+                        <c:when test="${section['class'].name
+                                        == 'pl.merskip.mathalfa.web.EquationSection'}">
+                            <jsp:include page="equation-section.jsp" />
+                        </c:when>
                         <c:otherwise>
                             <li class="list-group-item list-group-item-danger">
                                 Not found JSP for section ${section['class']}

@@ -56,9 +56,11 @@ public class CalculateServlet extends HttpServlet {
                 
                 List<Section> sections = new ArrayList<>();
                 sections.add(new SymbolSection("Input:", inputRootSymbol));
-                sections.add(new SymbolSection("Result:", resultRootSymbol));
                 if (resultRootSymbol != simplifyRootSymbol) {
-                    sections.add(new SymbolSection("Simplified result:", simplifyRootSymbol));
+                    sections.add(new EquationSection("Result:", resultRootSymbol, simplifyRootSymbol));
+                }
+                else {
+                    sections.add(new SymbolSection("Result:", resultRootSymbol));
                 }
                 request.setAttribute("sections", sections);
                 
