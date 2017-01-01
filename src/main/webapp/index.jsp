@@ -19,7 +19,7 @@
     </script>
 
     <!-- MathJax -->
-    <script async src="webjars/MathJax/2.6.1/MathJax.js?config=TeX-AMS_CHTML"> </script>
+    <script async src="webjars/MathJax/2.6.1/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="stylesheet" href="static/mjx-chtml.css" />
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
@@ -35,14 +35,10 @@
             }
         });
     </script>
-    <style><%--suppress CssUnusedSymbol --%>
-        .mjx-chtml {
-            outline: none;
-        }
-    </style>
 
     <!-- mathafla-web -->
     <link rel="stylesheet" href="static/ma-styles.css" />
+    <script src="static/ma-scripts.js"></script>
     <script>
         $(function () {
             // Wersja MathJax 2.6.1 nie usuwa elementów,
@@ -134,5 +130,6 @@
         </div>
     </c:if>
 </div>
+<%@include file="latex-preview-dialog.html" %>
 </body>
 </html>

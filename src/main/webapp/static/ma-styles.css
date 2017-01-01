@@ -32,6 +32,15 @@ body {
 .ma-panel-result {
 }
 
+.ma-extra-actions {
+    opacity: 0.0;
+    transition: opacity 0.1s linear;
+}
+
+.ma-section:hover .ma-extra-actions {
+    opacity: 1.0;
+}
+
 .ma-math-preview:not(:empty) {
     display: inline-block;
     position: relative;
