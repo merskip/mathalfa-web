@@ -12,14 +12,19 @@ public class EquationSection extends Section {
     
     private List<Symbol> members;
     
-    public EquationSection(String title) {
-        super(title);
-        members = new ArrayList<>();
+    public EquationSection(String title, Symbol symbol) {
+        this(title);
+        add(symbol);
     }
     
     public EquationSection(String title, Symbol leftMember, Symbol rightMember) {
         this(title);
         add(leftMember).add(rightMember);
+    }
+    
+    public EquationSection(String title) {
+        super(title);
+        members = new ArrayList<>();
     }
     
     public EquationSection add(Symbol member) {

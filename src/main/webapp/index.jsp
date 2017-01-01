@@ -75,11 +75,7 @@
     </form>
 
     <fmt:formatNumber var="total_time" minFractionDigits="3" maxFractionDigits="3"
-                      value="${requestScope.times['total'] * 1e-6}"/>
-    <fmt:formatNumber var="calculation_time" minFractionDigits="3" maxFractionDigits="3"
-                      value="${requestScope.times['calculation'] * 1e-6}"/>
-    <fmt:formatNumber var="latex_time" minFractionDigits="3" maxFractionDigits="3"
-                      value="${requestScope.times['latex'] * 1e-6}"/>
+                      value="${requestScope.total_time * 1e-6}"/>
 
     <c:if test="${not empty requestScope.result}">
         <div class="panel panel-default ma-panel-result">
@@ -87,10 +83,6 @@
                 <c:forEach var="section" items="${requestScope.sections}">
                     <c:set var="section" value="${section}" scope="request"/>
                     <c:choose>
-                        <c:when test="${section['class'].name
-                                        == 'pl.merskip.mathalfa.web.SymbolSection'}">
-                            <jsp:include page="symbol-section.jsp" />
-                        </c:when>
                         <c:when test="${section['class'].name
                                         == 'pl.merskip.mathalfa.web.EquationSection'}">
                             <jsp:include page="equation-section.jsp" />
@@ -105,11 +97,7 @@
             </ul>
             <div class="panel-footer">
                 <span class="ma-result-time pull-right">
-                    in ${total_time} ms
-                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip"
-                          title="<strong>Total time - ${total_time} ms</strong><br/>
-                                 Calculation time - ${calculation_time} ms<br/>
-                                 Time generate LaTex  - ${latex_time} ms"></span>
+                    calculated in ${total_time} ms
                 </span>
                 <div class="clearfix"></div>
             </div>
@@ -123,7 +111,7 @@
             </div>
             <div class="panel-footer">
                 <span class="ma-result-time pull-right">
-                    in ${total_time} ms
+                    result in ${total_time} ms
                 </span>
                 <div class="clearfix"></div>
             </div>
