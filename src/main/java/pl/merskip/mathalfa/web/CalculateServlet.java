@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 @WebServlet(name = "CalculateServlet", urlPatterns = "")
 public class CalculateServlet extends HttpServlet {
@@ -46,7 +47,7 @@ public class CalculateServlet extends HttpServlet {
         if (input != null && !input.isEmpty()) {
             request.setAttribute("input", input);
     
-            calculate(input);
+            calculate(input, 30);
             if (resultRootSymbol != null) {
                 request.setAttribute("result", true);
                 request.setAttribute("latexRenderer", latexRenderer);
@@ -68,6 +69,23 @@ public class CalculateServlet extends HttpServlet {
         
         clearResults();
         request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+    
+    private void calculate(String input, long timeoutSeconds) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future future = executor.submit(() -> calculate(input));
+    
+        try {
+            future.get(timeoutSeconds, TimeUnit.SECONDS);
+            
+        } catch (TimeoutException e) {
+            future.cancel(true);
+            throw new RuntimeException(e);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    
+        executor.shutdownNow();
     }
     
     private void calculate(String input) {
