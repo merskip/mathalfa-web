@@ -1,9 +1,12 @@
 package pl.merskip.mathalfa.web;
 
 import pl.merskip.mathalfa.base.core.Symbol;
+import pl.merskip.mathalfa.base.infixparser.ToPostfixConverter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EquationSection extends Section {
     
@@ -26,5 +29,19 @@ public class EquationSection extends Section {
     
     public List<Symbol> getMembers() {
         return members;
+    }
+    
+    public String getJsonRPN() {
+        return "[ "+ getRPN().stream()
+                .map(s -> "\"" + s + "\"")
+                .collect(Collectors.joining(", "))
+                + " ]";
+    }
+    
+    public List<String> getRPN() {
+        List<String> rpn = new ArrayList<>();
+        members.forEach(member -> rpn.addAll(ToPostfixConverter.toPostfix(member)));
+        rpn.addAll(Collections.nCopies(members.size() - 1, "="));
+        return rpn;
     }
 }

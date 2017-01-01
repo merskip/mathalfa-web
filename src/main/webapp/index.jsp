@@ -130,6 +130,6 @@
         </div>
     </c:if>
 </div>
-<%@include file="latex-preview-dialog.html" %>
+<%@include file="ma-simple-modal.html" %>
 </body>
 </html>
