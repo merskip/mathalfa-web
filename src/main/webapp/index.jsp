@@ -89,15 +89,18 @@
         <div class="panel panel-default ma-panel-result">
             <ul class="list-group">
                 <c:forEach var="section" items="${requestScope.sections}">
-                    <li class="list-group-item">
-                        <div class="list-group-item-heading">
-                            <p class="text-primary">${section.title}</p>
-                        </div>
-                        <div class="list-group-item-text">
-                            <span class="ma-math-preview"></span>
-                            <script type="math/tex">${section.latex}</script>
-                        </div>
-                    </li>
+                    <c:set var="section" value="${section}" scope="request"/>
+                    <c:choose>
+                        <c:when test="${section['class'].name
+                                        == 'pl.merskip.mathalfa.web.SymbolSection'}">
+                            <jsp:include page="symbol-section.jsp" />
+                        </c:when>
+                        <c:otherwise>
+                            <li class="list-group-item list-group-item-danger">
+                                Not found JSP for section ${section['class']}
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </ul>
             <div class="panel-footer">

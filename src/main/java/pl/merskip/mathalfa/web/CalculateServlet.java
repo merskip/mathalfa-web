@@ -1,7 +1,6 @@
 package pl.merskip.mathalfa.web;
 
 import com.google.common.base.Throwables;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import pl.merskip.mathalfa.base.core.Symbol;
 import pl.merskip.mathalfa.base.core.fragment.FragmentException;
@@ -18,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "CalculateServlet", urlPatterns = "")
 public class CalculateServlet extends HttpServlet {
@@ -29,7 +30,6 @@ public class CalculateServlet extends HttpServlet {
     private HttpServletResponse response;
     
     private Symbol inputRootSymbol, resultRootSymbol, simplifyRootSymbol;
-    private String inputLatex, resultLatex;
     private long totalTime, calculationTime, latexTime;
     
     @Override
@@ -52,10 +52,16 @@ public class CalculateServlet extends HttpServlet {
             calculate(input);
             if (resultRootSymbol != null) {
                 request.setAttribute("result", true);
-                request.setAttribute("sections", ImmutableList.of(
-                        new LatexSection("Input:", inputLatex),
-                        new LatexSection("Result:", resultLatex)
-                ));
+                request.setAttribute("latexRenderer", latexRenderer);
+                
+                List<Section> sections = new ArrayList<>();
+                sections.add(new SymbolSection("Input:", inputRootSymbol));
+                sections.add(new SymbolSection("Result:", resultRootSymbol));
+                if (resultRootSymbol != simplifyRootSymbol) {
+                    sections.add(new SymbolSection("Simplified result:", simplifyRootSymbol));
+                }
+                request.setAttribute("sections", sections);
+                
                 request.setAttribute("times", ImmutableMap.of(
                         "total", totalTime,
                         "calculation", calculationTime,
@@ -76,16 +82,6 @@ public class CalculateServlet extends HttpServlet {
                     resultRootSymbol = new CalculateOperation().executeForResult(inputRootSymbol);
                     simplifyRootSymbol = new SimplifyOperation().executeForResult(resultRootSymbol);
                 });
-            
-                latexTime = measure(() -> {
-                    inputLatex = latexRenderer.renderSymbol(inputRootSymbol);
-                    if (resultRootSymbol != simplifyRootSymbol) {
-                        resultLatex = latexRenderer.renderEquation(resultRootSymbol, simplifyRootSymbol);
-                    }
-                    else {
-                        resultLatex = latexRenderer.renderSymbol(resultRootSymbol);
-                    }
-                });
             }
             catch (FragmentException e) {
                 request.setAttribute("error", Throwables.getStackTraceAsString(e));
@@ -96,8 +92,6 @@ public class CalculateServlet extends HttpServlet {
     private void clearResults() {
         inputRootSymbol = null;
         resultRootSymbol = null;
-        inputLatex = null;
-        resultLatex = null;
         totalTime = 0;
         calculationTime = 0;
         latexTime = 0;
